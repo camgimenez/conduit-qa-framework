@@ -1,0 +1,10 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.env
+*.local
+coverage/
+.auth/
+# test-user.json contains generated credentials — never commit
+.auth/test-user.json

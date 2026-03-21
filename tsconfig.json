@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["e2e/pages/*"],
+      "@fixtures/*": ["e2e/fixtures/*"],
+      "@utils/*": ["e2e/utils/*"]
+    }
+  },
+  "include": ["e2e/**/*", "global-setup.ts"],
+  "exclude": ["node_modules", "dist", "playwright-report", "test-results"]
+}
