@@ -35,8 +35,7 @@ jobs:
       - name: Run Playwright smoke tests
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: npm run test:e2e:smoke
 
       - name: Upload HTML report

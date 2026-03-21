@@ -45,6 +45,9 @@ async function globalSetup(config: FullConfig) {
   await apiContext.dispose();
 
   // Step 2: Save credentials so tests can read them at runtime
+  if (!fs.existsSync('.auth')) {
+    fs.mkdirSync('.auth', { recursive: true });
+  }
   fs.writeFileSync(USER_FILE, JSON.stringify({ username, email, password }, null, 2));
 
   // Step 3: Build session.json with the token in localStorage
