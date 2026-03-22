@@ -3,7 +3,6 @@ import { generateRandomEmail, generateUsername } from '../utils/helpers';
 
 /**
  * SMK-01 — New user registration
- * Req: FR-01 | TC-001
  * Steps: Fill username, email, password → Submit
  * Expected: API POST /users returns 200, "New Article" link and username visible in nav
  */

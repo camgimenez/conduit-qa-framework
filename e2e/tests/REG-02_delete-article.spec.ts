@@ -4,7 +4,6 @@ import { API_BASE, getAuthToken, createArticle } from '../utils/api-helpers';
 
 /**
  * REG-02 — Author deletes their own article
- * Req: FR-12 | TC-038
  * Steps: (authenticated) Create article via API → Navigate to article → Click Delete → Confirm gone
  * Expected: Article deleted → redirect away from article page → article no longer accessible
  */

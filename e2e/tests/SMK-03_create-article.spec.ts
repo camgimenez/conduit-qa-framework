@@ -3,7 +3,6 @@ import { testData } from '../utils/test-data';
 
 /**
  * SMK-03 — Create a new article
- * Req: FR-09 | TC-030
  * Steps: (authenticated) Navigate to New Article → Fill title, description, body, tags → Publish
  * Expected: Article created → redirect to article view page showing the new content
  *

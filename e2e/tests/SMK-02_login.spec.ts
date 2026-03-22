@@ -4,7 +4,6 @@ import { createUser } from '../utils/api-helpers';
 
 /**
  * SMK-02 — Registered user sign in
- * Req: FR-03 | TC-006
  * Steps: Navigate to Sign in → Enter valid email + password → Submit
  * Expected: API POST /users/login returns 200, "Your Feed" tab visible in DOM
  *

@@ -1,15 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * E2E-18 / TC-012 — Unauthenticated user cannot access /editor
- * Req: FR-09 (negativo) | NFR-05
+ * SEC-01— Unauthenticated user cannot access /editor
  * Steps: Navigate to /editor without being logged in
  * Expected: Redirect away from /editor (to home or /login), nav shows Sign In / Sign Up
- *
  * This test does not use any auth fixture — the context starts completely clean
  * to guarantee that there is no previous session.
  */
-test.describe('E2E-18 | Unauthorized Access to Editor', () => {
+test.describe('SEC-01 | Unauthorized Access to Editor', () => {
   test('should redirect unauthenticated user away from /editor @smoke', async ({ page }) => {
 
     await test.step('navigate to /editor without a session', async () => {
