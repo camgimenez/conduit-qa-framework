@@ -11,9 +11,9 @@ export class EditorPage extends BasePage {
 
   constructor(page: Page) {
     super(page, '/editor');
-    this.titleInput = page.getByPlaceholder('Article Title');
-    this.descriptionInput = page.getByPlaceholder("What's this article about?");
-    this.bodyInput = page.getByPlaceholder('Write your article (in markdown)');
+    this.titleInput = page.locator('[formcontrolname="title"]');
+    this.descriptionInput = page.locator('[formcontrolname="description"]');
+    this.bodyInput = page.locator('[formcontrolname="body"]');
     this.tagInput = page.getByPlaceholder('Enter tags');
     this.publishButton = page.getByRole('button', { name: 'Publish Article' });
     this.tagList = page.locator('.tag-list');
