@@ -4,7 +4,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-v5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A production-grade, end-to-end automation framework built for the [Conduit (RealWorld)](https://demo.realworld.show/) application. This repository leverages modern QA engineering best practices to deliver a stable, fast, and scalable testing solution.
+End-to-end automation framework built for the [Conduit (RealWorld)](https://demo.realworld.show/) application. This repository leverages modern QA engineering best practices to deliver a stable, fast, and scalable testing solution.
 
 ---
 
@@ -86,7 +86,12 @@ The [project_conduit_framework.md](docs/project_conduit_framework.md) ensures Cl
 
 Also, I leveraged AI to perform Reverse Engineering on the Conduit application's requirements. We co-created a comprehensive list of Happy Paths, Edge Cases, and Failure Paths, which are documented in the [scenario_inventory] file.
 
-
 The use of AI in this project acted as a productivity catalyst, enabling a senior-level architectural design and comprehensive documentation while maintaining full human oversight and manual code validation.
+
+
 ---
+## 📂  Docs : Test Strategy Blueprint and Scenario Inventory
+
+You can find both files on [docs/](docs/) folder
+
 
