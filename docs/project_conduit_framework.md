@@ -16,17 +16,17 @@ Playwright + TypeScript framework built from scratch in `/Users/camilagimenez/De
 - `e2e/fixtures/index.ts` — fixtures with storageState for auth
 - `e2e/utils/` — helpers.ts (random generators), test-data.ts (user and article data)
 - `global-setup.ts` — creates user via API (idempotent) + saves UI session in .auth/session.json
-- `playwright.config.ts`, `package.json`, `tsconfig.json`, `jest.config.ts`
-- `.github/workflows/` — playwright.yml and jest.yml with artifact upload
+- `.github/workflows/` — `playwright.yml` with automated suite runs and artifact upload
+- `playwright.config.ts`, `package.json`, `tsconfig.json`
 
 ## Implemented Test Cases
-| ID | Description | Req |
-|----|-------------|-----|
-| SMK-01 | Register new user | FR-01 / TC-001 |
-| SMK-02 | Login with valid credentials | FR-03 / TC-006 |
-| SMK-03 | Create article with all fields | FR-09 / TC-030 |
-| E2E-18 | Redirect unauthenticated user when attempting to access /editor | NFR-05 / TC-012 |
-| REG-02 | Author deletes their own article | FR-12 / TC-038 |
+| ID | Description | 
+|----|-------------|
+| SMK-01 | Register new user |
+| SMK-02 | Login with valid credentials | 
+| SMK-03 | Create article with all fields | 
+| E2E-18 | Redirect unauthenticated user when attempting to access /editor | 
+| REG-02 | Author deletes their own article | 
 
 ## Key Technical Decisions
 - Skill used: `playwright-framework-generator` (created by the user with skill-creator, located in `/Users/camilagimenez/.claude/plugins/cache/claude-plugins-official/skill-creator/205b6e0b3036/skills/playwright-framework-generator/`)
@@ -53,7 +53,6 @@ Playwright + TypeScript framework built from scratch in `/Users/camilagimenez/De
 
 ### Fix: cannot find module dotenv
 - Removed `import dotenv from 'dotenv'` from `playwright.config.ts` (Playwright loads `.env` automatically since v1.44)
-- Removed `setupFiles: ['dotenv/config']` from `jest.config.ts`
 - Removed `dotenv` from devDependencies in `package.json`
 
 ### Fix: Hash routing URLs in all Pages

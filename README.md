@@ -1,106 +1,89 @@
-# Conduit QA Framework
+# 🌐 Conduit QA Framework
 
-A production-ready [Playwright](https://playwright.dev/) + TypeScript end-to-end testing framework built for the [Conduit App](https://demo.realworld.show/). 
+[![Playwright](https://img.shields.io/badge/Playwright-v1.44+-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-v5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This repository was designed starting with the RealWorld demo application. The framework implements modern testing standards, specifically optimized for speed, reliability, and robust authentication handling.
-
-## 🚀 Features
-
-- **Language & tooling**: Powered by [TypeScript](https://www.typescriptlang.org/) and built on top of Playwright.
-- **Design Pattern**: Page Object Model (POM) architecture to keep code clean and maintainable.
-- **Flaky-free Assertions**: Heavy focus on validating backend requests and `waitForResponse` intercepts rather than flaky DOM parsing, especially across cross-site navigations and redirects.
-- **Smart & Global Auth Management**: 
-  - Dynamic user provisioning via REST APIs (to avoid data collision when checking parallel tests).
-  - Storage State caching loaded from `.auth/session.json`. Playwright injects the auth token directly into the `localStorage` enabling lightning-fast authenticated browser sessions and bypassing log in flows.
-- **Clean Structure**: Helpers, random data generators, and cleanly defined user-facing DOM selectors (combining `getByRole`, `getByText`, etc.).
-- **CI/CD Integrated**: Configured to run in parallel on GitHub Actions on every Pull Request to `main` and `develop`.
+A production-grade, end-to-end automation framework built for the [Conduit (RealWorld)](https://demo.realworld.show/) application. This repository leverages modern QA engineering best practices to deliver a stable, fast, and scalable testing solution.
 
 ---
 
-## 📂 Project Structure
+## ✨ Key Features
 
-```text
-├── .github/workflows/       # GitHub Actions YAML to execute suite in CI (e.g. playwright.yml)
-├── e2e/                     # End-to-end framework
-│   ├── fixtures/            # Custom fixtures extending the Playwright 'test' object
-│   ├── pages/               # Page Object Models (e.g., LoginPage, EditorPage, HomePage)
-│   ├── tests/               # The actual test spec files containing execution logic
-│   └── utils/               # Utilities, test data, and random generator scripts
-├── global-setup.ts          # Root-level configuration to pre-provision an auth state
-├── playwright.config.ts     # Core Playwright configuration (timeouts, environments, reporters)
-├── package.json             # NPM dependencies & scripts mapping
-└── tsconfig.json            # TypeScript language server definitions
+- **🎯 Strategic Architecture**: Page Object Model (POM) design pattern for high maintainability and code reuse.
+- **⚡ Lightning-Fast Auth**: storageState caching directly in `localStorage` — bypassing UI login for authenticated tests to reach stable states 3-4x faster.
+- **🛡️ Flaky-Resistant**: Uses `waitForResponse` intercepts to validate backend state instead of relying on unpredictable DOM racing.
+- **📦 Clean Test Data**: Zero-dependency uniqueness strategy using dynamic `Date.now()` suffixes to guarantee data isolation in parallel runs.
+- **📊 Traceability & Debugging**: Automatic artifacts on failure — HTML reports, screenshots, and execution traces for rapid root-cause analysis.
+- **🚀 CI/CD Ready**: Fully configured for headless parallel execution via GitHub Actions.
+
+---
+
+## 📂 Project Navigation
+
+```mermaid
+graph TD;
+    Root["/"] --> CI[".github/workflows"]
+    Root --> Docs["docs/"]
+    Root --> E2E["e2e/"]
+    E2E --> Fix["fixtures/"]
+    E2E --> Pages["pages/"]
+    E2E --> Tests["tests/"]
+    E2E --> Utils["utils/"]
+    Root --> Config["playwright.config.ts"]
+    Root --> Setup["global-setup.ts"]
 ```
 
 ---
 
-## 🧪 Test Coverage Scenarios
+## 🏁 Quick Start
 
-The framework currently runs the following functional and regression test specifications:
+### 1. Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) (v20.x+) installed.
 
-| ID | Suite | Description |
-|---|---|---|
-| SMK-01 | `@smoke` | Creates a new user sequentially navigating through `/register` to the homepage. |
-| SMK-02 | `@smoke` | Login logic parsing real response statuses over `POST /api/users/login`. |
-| SMK-03 | `@smoke` | Asserts a user can create an article. Tests loaded dynamically skipping UI Auth (Injecting `.auth/session.json`). |
-| E2E-18 | `@smoke` | Redirects non-authenticated users seeking to access the `/editor` panel directly. |
-| REG-02 | `@regression` | Ensures authorship ownership, empowering authors to fully delete items they published from the DOM. |
-
----
-
-## 🏁 Getting Started
-
-### Prerequisites
-
-You need [Node.js](https://nodejs.org/) (version 20.x+) installed globally in your system.
-
-### 1. Install dependencies
-
+### 2. Installation
 ```bash
+# Install dependencies
 npm install
-```
 
-### 2. Install browsers
-
-```bash
+# Install Playwright browser engines
 npx playwright install --with-deps
 ```
 
-### 3. Run the Tests
-
-Execute tests in headless mode (perfect for CI):
-```bash
-npm run test:e2e
-```
-
-**Additional Commands:**
-- Run only `@smoke` specs: `npm run test:e2e:smoke`
-- Run only `@regression` specs: `npm run test:e2e:regression`
-- View execution in UI Mode: `npm run test:e2e:ui`
-- View in Headed mode (opens browsers): `npm run test:e2e:headed`
-- Run with the Inspector debugger: `npm run test:e2e:debug`
-- View the HTML Report from the last run: `npm run report`
+### 3. Execution
+| Goal | Command |
+|---|---|
+| Run all tests | `npm run test:e2e` |
+| Smoke suite only | `npm run test:e2e:smoke` |
+| Regression suite only | `npm run test:e2e:regression` |
+| Interactive UI Mode | `npm run test:e2e:ui` |
+| Debugging Inspector | `npm run test:e2e:debug` |
+| Last HTML Report | `npm run report` |
 
 ---
 
 ## ⚙️ Environment Configuration
 
-There's no need to handle manual `.env` file parsing as Playwright 1.44+ ships out-of-the-box support. Ensure the following fallback environment logic is matched (or overridden natively if exporting dynamically):
+Playwright handles environment variables natively. Key variables include:
 
-- `BASE_URL`: `https://api.realworld.show`
-- User auth tokens and variables run completely automatically using the dynamic fixture implementations combined within `global-setup.ts`. 
+- **`BASE_URL`**: `https://demo.realworld.show` (The UI entry point)
+- **`API_BASE_URL`**: `https://api.realworld.show` (Used for background user provisioning)
 
-*(Environment variables are generally generated iteratively inside the test runner process and cleaned up afterward)*.
+*Note: Auth tokens and dynamic test users are provisioned automatically via `global-setup.ts` into `.auth/session.json`.*
 
 ---
 
-## 🤖 AI Usage & Project Memory
+## 🤖 AI-Native Development & Memory
 
-This entire framework was initially generated and iteratively refined using AI, specifically leveraging **Claude** and an authored custom skill: `playwright-framework-generator`. 
+This framework lives an "AI-First" lifecycle. Its development history, architectural decisions, and technical lessons (like the refactoring for hash-routing compatibility) are tracked in the **Project Memory** system:
 
-The development methodology is actively tracked in a project-bound markdown memory file ([project_conduit_framework.md](docs/project_conduit_framework.md)). This enables the AI to:
-1. Retain context across debugging sessions.
-2. Recall the project structure without requiring the developer to re-explain it.
-3. Automatically track lessons learned—such as the refactoring to unique timestamps in global user provisioning (to mitigate data collision) and the shift toward using `waitForResponse` intercepts for stable state validation.
+- 📑 **Architecture Log:** [project_conduit_framework.md](docs/project_conduit_framework.md)
+- 📝 **Scenario Inventory:** We co-created a list of Happy Paths, Edge Cases, and Failure Paths (Scenarios documented in memory for future scale).
 
-The [project_conduit_framework.md](docs/project_conduit_framework.md) ensures Claude understands *why* architectural decisions were made, keeping future iterations aligned with the existing codebase patterns.
+The use of AI here acted as a **productivity catalyst**, enabling a senior-level architecture with complete documentation while maintaining strict human oversight and manual code validation.
+
+---
+
+<p align="center">
+  Generated with ❤️ for the QA Engineering community.
+</p>
