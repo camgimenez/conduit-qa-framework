@@ -75,15 +75,18 @@ Playwright handles environment variables natively. Key variables include:
 
 ## 🤖 AI-Native Development & Memory
 
-This framework lives an "AI-First" lifecycle. Its development history, architectural decisions, and technical lessons (like the refactoring for hash-routing compatibility) are tracked in the **Project Memory** system:
+This entire framework was initially generated and iteratively refined using AI, specifically leveraging **Claude** and an authored custom skill: `playwright-framework-generator`. 
 
-- 📑 **Architecture Log:** [project_conduit_framework.md](docs/project_conduit_framework.md)
-- 📝 **Scenario Inventory:** We co-created a list of Happy Paths, Edge Cases, and Failure Paths (Scenarios documented in memory for future scale).
+The development methodology is actively tracked in a project-bound markdown memory file ([project_conduit_framework.md](docs/project_conduit_framework.md)). This enables the AI to:
+1. Retain context across debugging sessions.
+2. Recall the project structure without requiring the developer to re-explain it.
+3. Automatically track lessons learned—such as the refactoring to unique timestamps in global user provisioning (to mitigate data collision) and the shift toward using `waitForResponse` intercepts for stable state validation.
 
-The use of AI here acted as a **productivity catalyst**, enabling a senior-level architecture with complete documentation while maintaining strict human oversight and manual code validation.
+The [project_conduit_framework.md](docs/project_conduit_framework.md) ensures Claude understands *why* architectural decisions were made, keeping future iterations aligned with the existing codebase patterns.
 
+Also, I leveraged AI to perform Reverse Engineering on the Conduit application's requirements. We co-created a comprehensive list of Happy Paths, Edge Cases, and Failure Paths, which are documented in the [scenario_inventory] file.
+
+
+The use of AI in this project acted as a productivity catalyst, enabling a senior-level architectural design and comprehensive documentation while maintaining full human oversight and manual code validation.
 ---
 
-<p align="center">
-  Generated with ❤️ for the QA Engineering community.
-</p>
