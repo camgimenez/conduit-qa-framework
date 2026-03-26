@@ -13,6 +13,9 @@ function loadTestUser(): { username: string; email: string; password: string } {
 }
 
 export const testData = {
+  // Common password across tests
+  testPassword: 'Test123!',
+  
   // Loaded at runtime from .auth/test-user.json (written by global-setup.ts)
   get existingUser() {
     return loadTestUser();
@@ -23,6 +26,6 @@ export const testData = {
     title: 'Test Article - Automation',
     description: 'A sample article created by the automation suite',
     body: 'This article was created as part of the Playwright smoke test. It validates the full article creation flow.',
-    tags: ['automation', 'playwright'],
+    tagList: ['automation', 'playwright'],
   },
 };

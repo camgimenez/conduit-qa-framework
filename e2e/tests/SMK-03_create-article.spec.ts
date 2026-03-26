@@ -11,7 +11,7 @@ import { testData } from '../utils/test-data';
  */
 test.describe('SMK-03 | Create Article', () => {
   test('should create a new article with all fields and redirect to article view @smoke', async ({ editorPage }) => {
-    const { title, description, body, tags } = testData.sampleArticle;
+    const { title, description, body, tagList } = testData.sampleArticle;
     // Use a timestamp to ensure unique titles across runs
     const uniqueTitle = `${title} ${Date.now()}`;
 
@@ -32,7 +32,7 @@ test.describe('SMK-03 | Create Article', () => {
     });
 
     await test.step('add tags', async () => {
-      for (const tag of tags) {
+      for (const tag of tagList) {
         await editorPage.addTag(tag);
       }
     });
@@ -61,7 +61,7 @@ test.describe('SMK-03 | Create Article', () => {
     });
 
     await test.step('verify tags are shown on the article page', async () => {
-      for (const tag of tags) {
+      for (const tag of tagList) {
         await expect(editorPage.page.getByText(tag, { exact: true })).toBeVisible();
       }
     });

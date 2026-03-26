@@ -1,6 +1,8 @@
-import { test, expect, request } from '@playwright/test';
+import { test, expect } from '../fixtures';
 import { ArticlePage } from '../pages/ArticlePage';
 import { API_BASE, getAuthToken, createArticle } from '../utils/api-helpers';
+import { request } from '@playwright/test';
+import { testData } from '../utils/test-data';
 
 /**
  * REG-02 — Author deletes their own article
@@ -8,26 +10,22 @@ import { API_BASE, getAuthToken, createArticle } from '../utils/api-helpers';
  * Expected: Article deleted → redirect away from article page → article no longer accessible
  */
 test.describe('REG-02 | Delete Own Article', () => {
-  test('should delete own article and confirm it is no longer accessible @regression', async ({ browser, baseURL }) => {
+  test('should delete own article and confirm it is no longer accessible @regression', async ({ authPage }) => {
     const token = getAuthToken();
     let slug: string;
 
     await test.step('create a test article via API', async () => {
+      const { title, description, body, tagList } = testData.sampleArticle;
       const article = await createArticle(token, {
-        title: `Article to delete ${Date.now()}`,
-        description: 'Created by REG-02 automation test',
-        body: 'This article will be deleted as part of the test.',
-        tagList: ['delete-test'],
+        title: `${title} - Delete Test ${Date.now()}`,
+        description,
+        body,
+        tagList,
       });
       slug = article.slug!;
     });
 
-    const context = await browser.newContext({
-      baseURL,
-      storageState: '.auth/session.json',
-    });
-    const page = await context.newPage();
-    const articlePage = new ArticlePage(page, slug!);
+    const articlePage = new ArticlePage(authPage, slug!);
 
     await test.step('navigate to the article page', async () => {
       await articlePage.navigate();
@@ -40,7 +38,7 @@ test.describe('REG-02 | Delete Own Article', () => {
 
     await test.step('click delete and verify API returns 204', async () => {
       const [response] = await Promise.all([
-        page.waitForResponse(
+        authPage.waitForResponse(
           res =>
             res.url().includes(`/api/articles/${slug}`) &&
             res.request().method() === 'DELETE'
@@ -51,7 +49,7 @@ test.describe('REG-02 | Delete Own Article', () => {
     });
 
     await test.step('verify redirect away from the deleted article', async () => {
-      await expect(page).not.toHaveURL(new RegExp(`/article/${slug}`));
+      await expect(authPage).not.toHaveURL(new RegExp(`/article/${slug}`));
     });
 
     await test.step('verify article is no longer accessible via API', async () => {
@@ -60,7 +58,5 @@ test.describe('REG-02 | Delete Own Article', () => {
       expect(res.status(), 'Deleted article should return 404').toBe(404);
       await apiContext.dispose();
     });
-
-    await context.close();
   });
 });
